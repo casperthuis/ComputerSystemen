@@ -1,0 +1,12 @@
+int bitAnd(int, int);
+int test_bitAnd(int, int);
+int fitsBits(int, int);
+int test_fitsBits(int, int);
+int isLessOrEqual(int, int);
+int test_isLessOrEqual(int, int);
+int ilog2(int);
+int test_ilog2(int);
+unsigned float_neg(unsigned);
+unsigned test_float_neg(unsigned);
+unsigned float_twice(unsigned);
+unsigned test_float_twice(unsigned);
