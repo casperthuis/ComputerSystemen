@@ -156,7 +156,10 @@ int lab_id = 8;
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+  int inverseX = ~ x;
+  int inverseY = ~ y;
+  int or = inverseX | inverseY;
+  return ~ or;
 }
 /* 
  * fitsBits - return 1 if x can be represented as an 
@@ -168,7 +171,11 @@ int bitAnd(int x, int y) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-  return 2;
+  int y = x >>  (n + ~(0)); 
+  //printf("%i\n", y);
+  int y2 = !y;
+  //int y3 = !(y+1);
+  return y2;
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -178,6 +185,8 @@ int fitsBits(int x, int n) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
+  
+
   return 2;
 }
 /*
