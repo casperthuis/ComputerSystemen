@@ -144,8 +144,6 @@ For the problems that require you to implent floating-point operations,
    *
    */
 
-
-
   /* Global ID to identify the combination of puzzles */
   int lab_id = 8;
   /*
@@ -160,6 +158,7 @@ For the problems that require you to implent floating-point operations,
   }
 
 /*
+}
  * fitsBits - return 1 if x can be represented as an
  *  n-bit, two's complement integer.
  *   1 <= n <= 32
@@ -168,9 +167,13 @@ For the problems that require you to implent floating-point operations,
  *   Max ops: 15
  *   Rating: 2
  */
+/// retract one of the n-bit and rightshifts the x 
+ // if n is correct the output will be only ones or zeró's. 
 int fitsBits(int x, int n) {
-  int mask = x >> 31;
-  return !(((~x & mask) + (x & ~mask)) >> (n + ~0));
+  int leadingbit = x >>  (n + ~(0)); 
+  int positive = !leadingbit; // returns 1 if the bit is 0 
+  int negative = !(leadingbit+1); //  returns 1 of the bit is -1
+  return positive|negative; // one of the negative or positive answers needs to 1.
 }
 
 
