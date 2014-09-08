@@ -174,7 +174,10 @@ int fitsBits(int x, int n) {
   int positive = !leadingbit; // returns 1 if the bit is 0 
   int negative = !(leadingbit+1); //  returns 1 of the bit is -1
   return positive|negative; // one of the negative or positive answers needs to 1.
-}
+} 
+
+
+
 
 
 /*
@@ -185,8 +188,27 @@ int fitsBits(int x, int n) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+/* 
+ *
+ *
+ *
+ */
+// These are very important in overflow situations
+int xNegative = ( x >> 31 );
+int yNegative = ( y >> 31 );
+
+// Calculate if they have the same or different sign
+int isNotSameSign = (xNegative ^ yNegative);
+int xNegYPos = (isNotSameSign & xNegative) & 1;
+
+//Adding numbers can cause overflow, causing a change of sign. If y<x then this will happen.
+int overflowOccured = (( x + ~y ) >> 31) & 1;
+int result = xNegYPos + (~isNotSameSign & overflowOccured);
+return result;
 }
+
+
+
 /*
  * ilog2 - return floor(log base 2 of x), where x > 0
  *   Example: ilog2(16) = 4
