@@ -188,23 +188,12 @@ int fitsBits(int x, int n) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-/* 
- *
- *
- *
- */
-// These are very important in overflow situations
 int xNegative = ( x >> 31 );
 int yNegative = ( y >> 31 );
-
-// Calculate if they have the same or different sign
 int isNotSameSign = (xNegative ^ yNegative);
 int xNegYPos = (isNotSameSign & xNegative) & 1;
-
-//Adding numbers can cause overflow, causing a change of sign. If y<x then this will happen.
-int overflowOccured = (( x + ~y ) >> 31) & 1;
-int result = xNegYPos + (~isNotSameSign & overflowOccured);
-return result;
+int overflowOccuredToNegative = (( x + ~y ) >> 31) & 1;
+return xNegYPos | (~isNotSameSign & overflowOccuredToNegative);
 }
 
 
@@ -231,7 +220,18 @@ int ilog2(int x) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
-  return 2;
+  int removeSignNumber = (~(1 << 31)) & uf; // removes the sign from the number so we dont have a logical shift problem.
+  int beforeThePoint = removeSignNumber >> 23; // gets the numbers that are in the exponent
+  int afterThePoint = uf << 9; // gets the numbers that are in the frac
+  // if the exponent contains only ones it should check if in the frac the 
+  // exponent is not zero else return the number itself 
+    if (beforeThePoint == 0xFF){
+        if(afterThePoint != 0){ 
+          return uf;
+        }
+    }
+  // the sign is 1 when zero and zero when 1  
+  return uf ^ (1 << 31);
 }
 /*
  * float_twice - Return bit-level equivalent of expression 2*f for
